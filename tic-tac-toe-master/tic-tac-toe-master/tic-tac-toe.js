@@ -5,6 +5,14 @@ document.addEventListener('DOMContentLoaded', function() {
   
   squares.forEach(function (square, index) {
     square.className = 'square';
+    square.addEventListener('mouseover', function (square) {
+      square.target.classList.add('hover');
+    })
+
+    square.addEventListener('mouseout', function(square) {
+      square.target.classList.remove('hover');
+    })
+    
     square.addEventListener('click', function() {
 
       if (!gameState[index]) {
