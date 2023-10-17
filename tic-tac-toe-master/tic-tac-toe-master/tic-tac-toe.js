@@ -42,8 +42,35 @@ document.addEventListener('DOMContentLoaded', function() {
           status.classList.add('you-won');
         }
       }
-    })
-  })
-})
+    });
+  });
+
+  const newGame = document.querySelector('.controls button.btn');
+  newGame.addEventListener('click', resetGame);
+
+  function resetGame() {
+    squares.forEach(function (square) {
+      square.textContent = '';
+      square.className = 'square';
+    });
+
+    gameState.fill(null);
+    let status = document.getElementById('status');
+    status.textContent = "Move your mouse over a square and click to play an X or an O.";
+    status.classList.remove('you-won');
+    Xturn = true;
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
 
 
