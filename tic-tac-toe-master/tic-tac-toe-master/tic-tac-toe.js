@@ -2,6 +2,19 @@ document.addEventListener('DOMContentLoaded', function() {
   let squares = document.querySelectorAll('#board > div');
   let Xturn = true;
   let gameState = new Array(9).fill(null);
+
+  let winningCombinations = [
+    [0, 1, 2], [3, 4, 5], [6, 7, 8],[0, 3, 6], [1, 4, 7], [2, 5, 8],[0, 4, 8], [2, 4, 6] ];
+
+  function winner(player, index) {
+    for (let combination of winningCombinations) {
+      let [a, b, c] = combination;
+      if (gameState[a] === player && gameState[b] === player && gameState[c] === player) {
+        return true;
+      }
+    }
+    return false;
+  }
   
   squares.forEach(function (square, index) {
     square.className = 'square';
@@ -12,14 +25,22 @@ document.addEventListener('DOMContentLoaded', function() {
     square.addEventListener('mouseout', function(square) {
       square.target.classList.remove('hover');
     })
-    
+
     square.addEventListener('click', function() {
 
       if (!gameState[index]) {
-        gameState[index] = Xturn ? 'X' : 'O';
-        square.textContent = gameState[index];
-        square.classList.add(Xturn ? 'X' : 'O');
+        let player = Xturn ? 'X' : 'O';
+        gameState[index] = player;
+        square.textContent = player;
+        square.classList.add(player);
         Xturn = !Xturn;
+
+        if (winner(player, index)) {
+          let message = `Congratulations! ${player} is the Winner!`;
+          let status = document.getElementById('status');
+          status.textContent = message;
+          status.classList.add('you-won');
+        }
       }
     })
   })
